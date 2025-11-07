@@ -1,7 +1,7 @@
 "use client"
 
 import { Facebook, Linkedin, Instagram } from "lucide-react"
-async function onFooterSubmit(e) {
+async function onFooterSubmit(e: React.FormEvent<HTMLFormElement>) {
   e.preventDefault();
 
   const form = e.currentTarget;
