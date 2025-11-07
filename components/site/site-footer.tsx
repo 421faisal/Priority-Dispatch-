@@ -1,6 +1,29 @@
 "use client"
 
 import { Facebook, Linkedin, Instagram } from "lucide-react"
+async function onFooterSubmit(e) {
+  e.preventDefault();
+
+  const form = e.currentTarget;
+  const formData = new FormData(form);
+
+  const data = {
+    name: formData.get("name"),
+  };
+
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (res.ok) {
+    alert("Thank you! We will contact you soon.");
+    form.reset();
+  } else {
+    alert("Failed to send. Please try again.");
+  }
+}
 
 export function SiteFooter() {
   return (
@@ -16,7 +39,8 @@ export function SiteFooter() {
           </div>
           <form
             className="grid w-full grid-cols-1 gap-2 md:w-auto md:grid-cols-4 md:items-center"
-            onSubmit={(e) => e.preventDefault()}
+           onSubmit={onFooterSubmit}
+
           >
             <input
               type="text"
@@ -85,10 +109,10 @@ export function SiteFooter() {
         <div>
           <h3 className="text-sm font-semibold">Contact</h3>
           <ul className="mt-3 space-y-2 text-sm opacity-90">
-            <li>123 Logistics Way</li>
-            <li>Transport City, USA</li>
-            <li>(+1) 555-123-4567</li>
-            <li>hello@prioritydispatch.com</li>
+            <li>The Priority Dispatch</li>
+            <li>804 brack st Kissimmee ,Fl 34744, USA</li>
+            <li> (+1) 689-314-8347</li>
+            <li>prioritydispatch4u@gmail.com</li>
           </ul>
         </div>
         <div>
@@ -115,7 +139,7 @@ export function SiteFooter() {
               <span className="sr-only">LinkedIn</span>
             </a>
             <a
-              href="#"
+              href="https://www.instagram.com/priority_dispatch?igsh=cmZmczdnOW1uYTJ3"
               aria-label="Follow on Instagram"
               className="flex h-9 w-9 items-center justify-center rounded-md bg-primary-foreground/10 hover:bg-primary-foreground/15"
               target="_blank"

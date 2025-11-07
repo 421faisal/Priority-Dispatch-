@@ -13,29 +13,51 @@ export function Contact() {
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setLoading(true)
-    try {
-      const form = e.currentTarget
-      const formData = new FormData(form)
-      // In a real app, send formData to your API route.
-      await new Promise((r) => setTimeout(r, 800))
+async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const data = {
+      name: formData.get("name"),
+      phone: formData.get("phone"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+    };
+
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (res.ok) {
       toast({
-        title: "Request received",
+        title: "✅ Message Sent!",
         description: "We will contact you shortly.",
-      })
-      form.reset()
-    } catch (err) {
+      });
+      form.reset();
+    } else {
       toast({
-        title: "Something went wrong",
+        title: "❌ Failed to Send",
         description: "Please try again.",
         variant: "destructive",
-      })
-    } finally {
-      setLoading(false)
+      });
     }
+  } catch (err) {
+    toast({
+      title: "❌ Error",
+      description: "Please try again.",
+      variant: "destructive",
+    });
+  } finally {
+    setLoading(false);
   }
+}
+
 
   return (
     <section id="contact" className="bg-primary text-primary-foreground">
@@ -45,10 +67,10 @@ export function Contact() {
           <p className="mt-3 text-foreground/90">Tell us what you’re looking for and we’ll get back to you promptly.</p>
           <ul className="mt-6 space-y-2 text-sm opacity-90">
             <li>
-              Phone: <span className="font-medium">(+1) 555-123-4567</span>
+              Phone: <span className="font-medium">(+1) 689-314-8347</span>
             </li>
             <li>
-              Email: <span className="font-medium">hello@prioritydispatch.com</span>
+              Email: <span className="font-medium">prioritydispatch4u@gmail.com</span>
             </li>
           </ul>
         </div>
